@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -28,8 +29,11 @@ public class ExampleController {
         BinaryOutputWrapper output = new BinaryOutputWrapper();
         try {
             String inputFile = "sample.pdf";
-            output = fileUtil.prepDownloadAsPDF(inputFile);
-            //or invoke prepDownloadAsZIP(...) with a list of filenames
+            //output = fileUtil.prepDownloadAsPDF(inputFile);
+            ArrayList<File> files = new ArrayList<>(2);
+            ArrayList<String> filesAsString = new ArrayList<>(2);
+            files.add(new File("README.md"));
+            output= fileUtil.prepDownloadAsZIP(filesAsString) ;
         } catch (IOException e) {
             e.printStackTrace();
             //Do something when exception is thrown
