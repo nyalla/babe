@@ -1,6 +1,7 @@
 package com.babe.util;
 
 import com.babe.beans.Field;
+import com.babe.constants.PortalConstants;
 import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -60,10 +61,10 @@ public class VelocityWriter {
         StringWriter writer = new StringWriter();
         t.merge(context, writer);
 
-        File myfile = new File("E:\\" + projectName + "\\src\\main\\java\\com\\app-name\\models\\" + modelName + ".java");
+        File myfile = new File("E:\\" + projectName + "\\src\\main\\java\\com\\app-name\\models\\" + modelName + PortalConstants.JAVA_EXTENSION);
         FileUtils.touch(myfile);
 
-        Path path = Paths.get("E:\\" + projectName + "\\src\\main\\java\\com\\app-name\\models\\" + modelName + ".java");
+        Path path = Paths.get("E:\\" + projectName + "\\src\\main\\java\\com\\app-name\\models\\" + modelName + PortalConstants.JAVA_EXTENSION);
 
         //Use try-with-resource to get auto-closeable writer instance
         try (BufferedWriter inject = Files.newBufferedWriter(path)) {
