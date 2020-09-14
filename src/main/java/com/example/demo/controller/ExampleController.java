@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import com.example.demo.model.Greeting;
+import com.example.demo.model.BinaryOutputWrapper;
+import com.example.demo.util.FileUtil;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,17 +20,21 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class ExampleController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    @Autowired
+    FileUtil fileUtil;
 
-    @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "name", defaultValue = "WorldChange19") String name) {
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
-    }
-
-    @GetMapping("/greet")
-    public Greeting greet(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
+    @GetMapping("/somepath/pdf")
+    public ResponseEntity<?> generatePDF() {
+        BinaryOutputWrapper output = new BinaryOutputWrapper();
+        try {
+            String inputFile = "sample.pdf";
+            output = fileUtil.prepDownloadAsPDF(inputFile);
+            //or invoke prepDownloadAsZIP(...) with a list of filenames
+        } catch (IOException e) {
+            e.printStackTrace();
+            //Do something when exception is thrown
+        }
+        return new ResponseEntity<>(output.getData(), output.getHeaders(), HttpStatus.OK);
     }
 
 
@@ -36,7 +43,36 @@ public class ExampleController {
         System.out.println("asa");
         //setting headers
         response.setStatus(HttpServletResponse.SC_OK);
-        response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
+        response.addHeader("Content-Disposition", "attachment; filename=\"11111.zip\"");
+
+        ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+
+        // create a list to add files to be zipped
+        ArrayList<File> files = new ArrayList<>(2);
+        files.add(new File("READMEnew.md"));
+
+        // package files
+        for (File file : files) {
+            //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
+            zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+            FileInputStream fileInputStream = new FileInputStream(file);
+
+            IOUtils.copy(fileInputStream, zipOutputStream);
+
+            fileInputStream.close();
+            zipOutputStream.closeEntry();
+        }
+
+        zipOutputStream.close();
+
+    }
+
+    @RequestMapping(value="/zip", produces="application/zip")
+    public void zipFiles(HttpServletResponse response) throws IOException {
+
+        //setting headers
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader("Content-Disposition", "attachment; filename=\"22222.zip\"");
 
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
@@ -57,6 +93,5 @@ public class ExampleController {
         }
 
         zipOutputStream.close();
-
     }
 }
