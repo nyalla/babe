@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>babe</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>babe</name>
 	<description>babe</description>
@@ -32,6 +32,12 @@
 		<artifactId>velocity</artifactId>
 		<version>1.7</version>
 	</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
 
 
 		<dependency>
