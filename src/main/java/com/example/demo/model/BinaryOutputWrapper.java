@@ -6,6 +6,9 @@ public class BinaryOutputWrapper {
     private byte[] data;
     org.springframework.http.HttpHeaders headers;
 
+    public BinaryOutputWrapper() {
+    }
+
     public BinaryOutputWrapper(byte[] data, HttpHeaders headers) {
         this.data = data;
         this.headers = headers;
