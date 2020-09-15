@@ -1,50 +1,50 @@
 package com.babe.beans;
 
 public class FieldDetails {
-    private String name;
-    private String type;
-    private boolean customType;
-    private boolean identity;
+    private String fieldName;
+    private String fieldType;
+    private boolean isCustomType;
+    private boolean isIdentity;
 
-    public FieldDetails(String name, String type, boolean customType, boolean identity) {
-        this.name = name;
-        this.type = type;
-        this.customType = customType;
-        this.identity = identity;
+    public FieldDetails(String fieldName, String fieldType, boolean isCustomType, boolean isIdentity) {
+        this.fieldName = fieldName;
+        this.fieldType = fieldType;
+        this.isCustomType = isCustomType;
+        this.isIdentity = isIdentity;
     }
 
     public FieldDetails() {
     }
 
-    public String getName() {
-        return name;
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public String getType() {
-        return type;
+    public String getFieldType() {
+        return fieldType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setFieldType(String fieldType) {
+        this.fieldType = fieldType;
     }
 
     public boolean isCustomType() {
-        return customType;
+        return isCustomType;
     }
 
     public void setCustomType(boolean customType) {
-        this.customType = customType;
+        this.isCustomType = customType;
     }
 
     public boolean isIdentity() {
-        return identity;
+        return isIdentity;
     }
 
     public void setIdentity(boolean identity) {
-        this.identity = identity;
+        this.isIdentity = identity;
     }
 }

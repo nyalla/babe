@@ -32,7 +32,7 @@ public class ModelPackageManager implements PackageManager {
         List<FieldContext> properties = new ArrayList<FieldContext>();
 
         for (FieldDetails fd : fields) {
-            properties.add(new FieldContext(fd.getName(), fd.getType(), fd.getName().substring(0, 1).toUpperCase() + fd.getName().substring(1)));
+            properties.add(new FieldContext(fd.getFieldName(), fd.getFieldType(), fd.getFieldName().substring(0, 1).toUpperCase() + fd.getFieldName().substring(1)));
         }
         context.put("properties", properties);
     }
@@ -47,11 +47,11 @@ public class ModelPackageManager implements PackageManager {
     @Override
     public void generatePackageFiles(Map<String, Object> globals) throws IOException {
         //Creation files
-        File myfile = new File("E:\\" + globals.get("packageName") + "\\src\\main\\java\\com\\app-name\\models\\" + globals.get("modelName") + PortalConstants.JAVA_EXTENSION);
+        File myfile = new File("E:\\" + globals.get("projectName") + "\\src\\main\\java\\com\\app-name\\models\\" + globals.get("modelName") + PortalConstants.JAVA_EXTENSION);
         FileUtils.touch(myfile);
 
         //Getting path of the file
-        Path path = Paths.get("E:\\" + globals.get("packageName") + "\\src\\main\\java\\com\\app-name\\models\\" + globals.get("modelName") + PortalConstants.JAVA_EXTENSION);
+        Path path = Paths.get("E:\\" + globals.get("projectName") + "\\src\\main\\java\\com\\app-name\\models\\" + globals.get("modelName") + PortalConstants.JAVA_EXTENSION);
 
         //Injecting data into file
         try (BufferedWriter inject = Files.newBufferedWriter(path)) {
