@@ -1,12 +1,12 @@
 package com.babe.beans;
 
-public class Field {
+public class FieldContext {
     private String fieldName;
     private String fieldType;
     private String getterAndSetterField;
 
 
-    public Field(String fieldName, String fieldType,String getterAndSetterField) {
+    public FieldContext(String fieldName, String fieldType, String getterAndSetterField) {
         super();
         this.fieldName = fieldName;
         this.fieldType = fieldType;

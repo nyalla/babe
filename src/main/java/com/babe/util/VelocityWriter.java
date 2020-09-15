@@ -1,6 +1,6 @@
 package com.babe.util;
 
-import com.babe.beans.Field;
+import com.babe.beans.FieldContext;
 import com.babe.constants.PortalConstants;
 import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
@@ -14,9 +14,7 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class VelocityWriter {
 
@@ -26,47 +24,43 @@ public class VelocityWriter {
     public static void main(String[] args) throws IOException {
 
         String projectName = "babe";
-        System.out.println("came");
-        File source = new File("E:\\projects\\babe\\standard-folder\\project-name");
-        File dest = new File("E:\\" + projectName);
-        try {
-            FileUtils.copyDirectory(source, dest);
-            System.out.println("came");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("came");
+
+        Map<String, Object> globals = new HashMap<>();
+        globals.put("packageName",packageName);
+        globals.put("modelName",modelName);
+
         VelocityEngine velocityEngine = new VelocityEngine();
         Properties p = new Properties();
         p.setProperty("resource.loader", "class");
         p.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         velocityEngine.init(p);
 
+        //Creating tempalte
         Template t = velocityEngine.getTemplate("vtemplates/class.vm");
 
+        //Construction of context properties
         VelocityContext context = new VelocityContext();
-
-        if (packageName != null) {
-            context.put("packagename", packageName);
-        }
-
-        List<Field> properties = new ArrayList<Field>();
-        properties.add(new Field("id", "int", "Id"));
-        properties.add(new Field("firstName", "String", "FirstName"));
-        properties.add(new Field("lastName", "String", "LastName"));
-        properties.add(new Field("dob", "LocalDate", "Dob"));
+        context.put("packagename", packageName);
+        List<FieldContext> properties = new ArrayList<FieldContext>();
+        properties.add(new FieldContext("id", "int", "Id"));
+        properties.add(new FieldContext("firstName", "String", "FirstName"));
+        properties.add(new FieldContext("lastName", "String", "LastName"));
+        properties.add(new FieldContext("dob", "LocalDate", "Dob"));
         context.put("className", modelName);
         context.put("properties", properties);
 
+        //Preparation of VM file contentn
         StringWriter writer = new StringWriter();
         t.merge(context, writer);
 
+        //Creation files
         File myfile = new File("E:\\" + projectName + "\\src\\main\\java\\com\\app-name\\models\\" + modelName + PortalConstants.JAVA_EXTENSION);
         FileUtils.touch(myfile);
 
+        //Getting path of the file
         Path path = Paths.get("E:\\" + projectName + "\\src\\main\\java\\com\\app-name\\models\\" + modelName + PortalConstants.JAVA_EXTENSION);
 
-        //Use try-with-resource to get auto-closeable writer instance
+        //Injecting data into file
         try (BufferedWriter inject = Files.newBufferedWriter(path)) {
             inject.write(writer.toString());
         }
