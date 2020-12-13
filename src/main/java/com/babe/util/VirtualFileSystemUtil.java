@@ -16,7 +16,7 @@ import java.util.zip.ZipOutputStream;
 public class VirtualFileSystemUtil {
     public static void main(String[] args) throws IOException {
 
-        FileSystem fs = Jimfs.newFileSystem(Configuration.unix());
+       /* FileSystem fs = Jimfs.newFileSystem(Configuration.windows());
         Path foo = fs.getPath("/foo");
         Files.createDirectory(foo);
 
@@ -27,10 +27,10 @@ public class VirtualFileSystemUtil {
         if (!Files.isDirectory(foo)) {
             System.out.println("Please provide a folder.");
             return;
-        }
+        }*/
         try {
-            //Path mainP = Paths.get("E:\\babe");
-            VirtualFileSystemUtil.zipFolder(hello);
+            Path mainP = Paths.get("C:\\Users\\pc\\Downloads\\data-structures-master");
+            VirtualFileSystemUtil.zipFolder(mainP);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,25 +1,16 @@
 package com.babe.util;
 
-import com.babe.beans.FieldContext;
 import com.babe.beans.Payload;
-import com.babe.constants.PortalConstants;
 import com.babe.framework.DefaultDirectoryManager;
 import com.babe.skeletons.ModelPackageManager;
 import com.babe.skeletons.PackageManager;
 import com.google.gson.Gson;
-import org.apache.commons.io.FileUtils;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.boot.actuate.info.InfoPropertiesInfoContributor;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class VelocityWriter {
@@ -73,14 +64,17 @@ public class VelocityWriter {
                 = gson.fromJson(payLoadJson,
                 Payload.class);
 
+        File tempDirectory = new File(System.getProperty("java.io.tmpdir"));
+        File fileWithRelativePath = new File(tempDirectory, "newFile.txt");
+
         Map<String, Object> globals = new HashMap<>();
         globals.put("packageName",packageName);
         globals.put("modelName",modelName);
         globals.put("projectName",payload.getProjectName());
         VelocityEngine velocityEngine = new VelocityEngine();
         Properties p = new Properties();
-        p.setProperty("resource.loader", "class");
-        p.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         velocityEngine.init(p);
 
         DefaultDirectoryManager dm = new DefaultDirectoryManager();

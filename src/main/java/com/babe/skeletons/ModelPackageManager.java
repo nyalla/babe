@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.babe.constants.PortalConstants.BASE_PATH;
+
 public class ModelPackageManager implements PackageManager {
 
     private VelocityContext context = new VelocityContext();
@@ -47,11 +49,11 @@ public class ModelPackageManager implements PackageManager {
     @Override
     public void generatePackageFiles(Map<String, Object> globals) throws IOException {
         //Creation files
-        File myfile = new File("E:\\" + globals.get("projectName") + "\\src\\main\\java\\com\\app-name\\models\\" + globals.get("modelName") + PortalConstants.JAVA_EXTENSION);
+        File myfile = new File(BASE_PATH + globals.get("projectName") + "\\src\\main\\java\\com\\app-name\\models\\" + globals.get("modelName") + PortalConstants.JAVA_EXTENSION);
         FileUtils.touch(myfile);
 
         //Getting path of the file
-        Path path = Paths.get("E:\\" + globals.get("projectName") + "\\src\\main\\java\\com\\app-name\\models\\" + globals.get("modelName") + PortalConstants.JAVA_EXTENSION);
+        Path path = Paths.get(BASE_PATH + globals.get("projectName") + "\\src\\main\\java\\com\\app-name\\models\\" + globals.get("modelName") + PortalConstants.JAVA_EXTENSION);
 
         //Injecting data into file
         try (BufferedWriter inject = Files.newBufferedWriter(path)) {
