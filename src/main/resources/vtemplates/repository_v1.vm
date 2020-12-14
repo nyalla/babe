@@ -1,7 +1,4 @@
 
-
-package ${packagename};
-
 #foreach( $imports in $class.imports)
 $imports
 #end

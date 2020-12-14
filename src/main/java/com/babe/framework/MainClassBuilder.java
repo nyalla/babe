@@ -33,16 +33,14 @@ public class MainClassBuilder
             t.merge(context, writer);
             File myfile = new File(
                     BASE_PATH + globals.get("projectName") + SRC_TO_COM + globals.get("appName")
-                            + "\\models\\"
+                            + File.separator + "models" + File.separator
                             + repoClass.getClassName() + PortalConstants.JAVA_EXTENSION);
             FileUtils.touch(myfile);
-
             //Getting path of the file
             Path path = Paths.get(
                     BASE_PATH + globals.get("projectName") + SRC_TO_COM + globals.get("appName")
-                            + "\\models\\"
+                            + File.separator + "models" + File.separator
                             + repoClass.getClassName() + PortalConstants.JAVA_EXTENSION);
-
             //Injecting data into file
             try (BufferedWriter inject = Files.newBufferedWriter(path))
             {

@@ -5,20 +5,22 @@ import com.google.common.base.CaseFormat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RepositoryClassPrototype extends AbstractClassPrototype
 {
-    public RepositoryClassPrototype(String className, String classCategory)
+    public RepositoryClassPrototype(String className, String classCategory, Map<String, Object> globals)
     {
         super(className, classCategory);
-        initialContextBuilder();
+        initialContextBuilder(globals);
     }
 
-    void initialContextBuilder()
+    void initialContextBuilder(Map<String, Object> globals)
     {
+        imports.add("package " + globals.get("packageName") + ".models;");
         imports.add("import javax.persistence.*;");
         classLevelAnnotation.add("@Entity");
-        classLevelAnnotation.add("@Table(name=" + className.toLowerCase() + ")");
+        classLevelAnnotation.add("@Table(name=\"" + className.toLowerCase() + "\")");
         getVMByCategory("");
     }
 
@@ -46,16 +48,16 @@ public class RepositoryClassPrototype extends AbstractClassPrototype
                 List<String> annotations = new ArrayList<>();
                 annotations.add("@Id");
                 annotations.add(
-                        "@Column(name = " + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, fd.getFieldName())
-                                + ", nullable = false)");
+                        "@Column(name = \"" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, fd.getFieldName())
+                                + "\", nullable = false)");
                 annotations.add("@GeneratedValue(strategy = GenerationType.IDENTITY)");
                 fieldPrototype.getAnnotation().addAll(annotations);
             }
             else
             {
                 fieldPrototype.getAnnotation().add(
-                        "@Column(name = " + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, fd.getFieldName())
-                                + ", nullable = false)");
+                        "@Column(name = \"" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, fd.getFieldName())
+                                + "\", nullable = false)");
             }
             fields.add(fieldPrototype);
         }

@@ -1,11 +1,12 @@
 package com.babe.framework;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractClassPrototype implements ClassPrototype
 {
-    public List<String> imports = new ArrayList<>();
+    public List<String> imports = new LinkedList<>();
     public String className;
     public List<String> classLevelAnnotation = new ArrayList<>();
     public String classCategory;

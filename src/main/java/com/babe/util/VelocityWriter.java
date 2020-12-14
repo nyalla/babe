@@ -5,26 +5,20 @@ import com.babe.framework.ClassPrototype;
 import com.babe.framework.DefaultDirectoryManager;
 import com.babe.framework.MainClassBuilder;
 import com.babe.framework.RepositoryClassPrototype;
-import com.babe.skeletons.ModelPackageManager;
-import com.babe.skeletons.PackageManager;
 import com.google.gson.Gson;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 public class VelocityWriter
 {
 
-    static String modelName = "User";
-    static String packageName = "com.companyname.projectname";
 
     public static void main(String[] args) throws IOException
     {
-
         String projectName = "babe";
 
         String payLoadJson = "{\n" +
@@ -61,7 +55,7 @@ public class VelocityWriter
                 "\t]\n" +
                 "\n" +
                 "}";
-        String appName="pilot";
+        String appName = "pilot";
 
         // Creating a Gson Object
         Gson gson = new Gson();
@@ -70,7 +64,7 @@ public class VelocityWriter
                 Payload.class);
 
         Map<String, Object> globals = new HashMap<>();
-        globals.put("packageName", packageName);
+        globals.put("packageName", "com." + appName);
         globals.put("appName", appName);
         globals.put("projectName", payload.getProjectName());
 
@@ -84,7 +78,7 @@ public class VelocityWriter
         dm.createDefaultDirectory(payload.getProjectName(), appName);
 
         ClassPrototype repositoryClass = new RepositoryClassPrototype(
-                payload.getTableName().substring(0, 1).toUpperCase() + payload.getTableName().substring(1), "");
+                payload.getTableName().substring(0, 1).toUpperCase() + payload.getTableName().substring(1), "",globals);
         repositoryClass.setClassFields(payload.getFieldDetails());
 
         MainClassBuilder builder = new MainClassBuilder();
