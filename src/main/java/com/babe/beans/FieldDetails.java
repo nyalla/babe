@@ -1,50 +1,62 @@
 package com.babe.beans;
 
-public class FieldDetails {
+public class FieldDetails
+{
+    //fieldNames should be camecase, java formatted
     private String fieldName;
     private String fieldType;
     private boolean isCustomType;
     private boolean isIdentity;
 
-    public FieldDetails(String fieldName, String fieldType, boolean isCustomType, boolean isIdentity) {
+    public FieldDetails(String fieldName, String fieldType, boolean isCustomType, boolean isIdentity)
+    {
         this.fieldName = fieldName;
         this.fieldType = fieldType;
         this.isCustomType = isCustomType;
         this.isIdentity = isIdentity;
     }
 
-    public FieldDetails() {
+    public FieldDetails()
+    {
     }
 
-    public String getFieldName() {
+    public String getFieldName()
+    {
         return fieldName;
     }
 
-    public void setFieldName(String fieldName) {
+    public void setFieldName(String fieldName)
+    {
         this.fieldName = fieldName;
     }
 
-    public String getFieldType() {
+    public String getFieldType()
+    {
         return fieldType;
     }
 
-    public void setFieldType(String fieldType) {
+    public void setFieldType(String fieldType)
+    {
         this.fieldType = fieldType;
     }
 
-    public boolean isCustomType() {
+    public boolean isCustomType()
+    {
         return isCustomType;
     }
 
-    public void setCustomType(boolean customType) {
+    public void setCustomType(boolean customType)
+    {
         this.isCustomType = customType;
     }
 
-    public boolean isIdentity() {
+    public boolean isIdentity()
+    {
         return isIdentity;
     }
 
-    public void setIdentity(boolean identity) {
+    public void setIdentity(boolean identity)
+    {
         this.isIdentity = identity;
     }
 }
