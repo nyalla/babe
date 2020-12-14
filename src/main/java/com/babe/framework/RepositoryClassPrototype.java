@@ -17,10 +17,14 @@ public class RepositoryClassPrototype extends AbstractClassPrototype
 
     void initialContextBuilder(Map<String, Object> globals)
     {
+        //ADDING IMPORTS
         imports.add("package " + globals.get("packageName") + ".models;");
         imports.add("import javax.persistence.*;");
+
+        //Adding class level annotations
         classLevelAnnotation.add("@Entity");
         classLevelAnnotation.add("@Table(name=\"" + className.toLowerCase() + "\")");
+
         getVMByCategory("");
     }
 
