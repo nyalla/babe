@@ -6,13 +6,8 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 import static com.babe.constants.PortalConstants.BASE_PATH;
@@ -24,27 +19,25 @@ public class MainClassBuilder
     {
         VelocityContext context = new VelocityContext();
         StringWriter writer = new StringWriter();
+
         if (proto instanceof RepositoryClassPrototype)
         {
             RepositoryClassPrototype repoClass = (RepositoryClassPrototype) proto;
+
             Template t = velocityEngine.getTemplate(repoClass.getVmPath());
             context.put("class", repoClass);
             context.put("packagename", globals.get("packageName"));
             t.merge(context, writer);
+
             File myfile = new File(
                     BASE_PATH + globals.get("projectName") + SRC_TO_COM + globals.get("appName")
                             + File.separator + "models" + File.separator
                             + repoClass.getClassName() + PortalConstants.JAVA_EXTENSION);
             FileUtils.touch(myfile);
-            //Getting path of the file
-            Path path = Paths.get(
-                    BASE_PATH + globals.get("projectName") + SRC_TO_COM + globals.get("appName")
-                            + File.separator + "models" + File.separator
-                            + repoClass.getClassName() + PortalConstants.JAVA_EXTENSION);
-            //Injecting data into file
-            try (BufferedWriter inject = Files.newBufferedWriter(path))
+
+            try (FileOutputStream fis = new FileOutputStream(myfile))
             {
-                inject.write(writer.toString());
+                fis.write(writer.toString().getBytes(Charset.defaultCharset()));
             }
         }
     }
