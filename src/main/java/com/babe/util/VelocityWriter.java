@@ -87,11 +87,17 @@ public class VelocityWriter
                         + payload.getTableName().substring(1), "", globals, entityBean);
         project.getRepositoryList().add(repository);
 
+        ControllerClassPrototype controller = new ControllerClassPrototype(
+                payload.getTableName().substring(0, 1).toUpperCase()
+                        + payload.getTableName().substring(1), "",globals,repository,entityBean);
+        project.getControllerList().add(controller);
+
 
         MainClassBuilder builder = new MainClassBuilder();
 
         builder.constructClass(entityBean, velocityEngine, globals);
         builder.constructClass(repository, velocityEngine, globals);
+        builder.constructClass(controller, velocityEngine, globals);
         /*
         PackageManager model = new ModelPackageManager();
         model.buildPackageContexts(globals,payload.getFieldDetails());

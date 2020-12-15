@@ -32,6 +32,13 @@ public class MainClassBuilder
                 context.put("class", classInstance);
                 generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
             }
+            else
+                if (proto instanceof ControllerClassPrototype)
+                {
+                    ControllerClassPrototype classInstance = (ControllerClassPrototype) proto;
+                    context.put("class", classInstance);
+                    generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
+                }
     }
 
     public void generateClassFile(VelocityEngine velocityEngine, String vmPath, VelocityContext context, Map<String, Object> globals, String fileName, String classPackage) throws IOException
