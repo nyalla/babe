@@ -20,9 +20,9 @@ public class MainClassBuilder
         VelocityContext context = new VelocityContext();
         StringWriter writer = new StringWriter();
 
-        if (proto instanceof RepositoryClassPrototype)
+        if (proto instanceof EntityBeanClassPrototype)
         {
-            RepositoryClassPrototype repoClass = (RepositoryClassPrototype) proto;
+            EntityBeanClassPrototype repoClass = (EntityBeanClassPrototype) proto;
 
             Template t = velocityEngine.getTemplate(repoClass.getVmPath());
             context.put("class", repoClass);

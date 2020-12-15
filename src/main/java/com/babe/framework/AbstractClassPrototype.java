@@ -6,6 +6,7 @@ import java.util.List;
 
 public abstract class AbstractClassPrototype implements ClassPrototype
 {
+    public String packageName;
     public List<String> imports = new LinkedList<>();
     public String className;
     public List<String> classLevelAnnotation = new ArrayList<>();
@@ -44,6 +45,16 @@ public abstract class AbstractClassPrototype implements ClassPrototype
         this.fields = fields;
         this.autowireClasses = autowireClasses;
         this.vmPath = vmPath;
+    }
+
+    public String getPackageName()
+    {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName)
+    {
+        this.packageName = packageName;
     }
 
     public String getClassName()

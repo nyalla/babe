@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class RepositoryClassPrototype extends AbstractClassPrototype
+public class EntityBeanClassPrototype extends AbstractClassPrototype
 {
-    public RepositoryClassPrototype(String className, String classCategory, Map<String, Object> globals)
+    public EntityBeanClassPrototype(String className, String classCategory, Map<String, Object> globals)
     {
         super(className, classCategory);
         initialContextBuilder(globals);
@@ -17,10 +17,11 @@ public class RepositoryClassPrototype extends AbstractClassPrototype
 
     void initialContextBuilder(Map<String, Object> globals)
     {
-        //ADDING IMPORTS
-        imports.add("package " + globals.get("packageName") + ".models;");
-        imports.add("import javax.persistence.*;");
+        //Package Name
+        packageName = globals.get("packageName") + ".models";
 
+        //ADDING IMPORTS
+        imports.add("import javax.persistence.*;");
         //Adding class level annotations
         classLevelAnnotation.add("@Entity");
         classLevelAnnotation.add("@Table(name=\"" + className.toLowerCase() + "\")");
