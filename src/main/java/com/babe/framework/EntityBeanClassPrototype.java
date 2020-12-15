@@ -15,7 +15,8 @@ public class EntityBeanClassPrototype extends AbstractClassPrototype
         initialContextBuilder(globals);
     }
 
-    void initialContextBuilder(Map<String, Object> globals)
+    @Override
+    public void initialContextBuilder(Map<String, Object> globals)
     {
         //Package Name
         packageName = globals.get("packageName") + ".models";
