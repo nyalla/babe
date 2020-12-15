@@ -1,0 +1,35 @@
+
+package $packageName.$class.classPackage ;
+#foreach( $imports in $class.imports)
+$imports
+#end
+
+#foreach( $classLevelAnnotation in $class.classLevelAnnotation)
+$classLevelAnnotation
+#end
+public class $class.className implements Serializable {
+
+ /** Serial Version UID. */
+ private static final long serialVersionUID = 1L;
+
+#foreach( $autowireClasses in $class.autowireClasses)
+$autowireClasses
+#end
+
+#foreach( $property in $class.fields)
+#foreach( $annotation in $property.annotation)
+$annotation
+#end
+private $property.type $property.name;
+#end
+
+#foreach( $property in $class.fields)
+ public $property.type get$property.getterAndSetterField () {
+     return this.$property.name;
+ }
+
+ public void set$property.getterAndSetterField ($property.type $property.name) {
+     this.$property.name = $property.name;
+ }
+#end
+}
