@@ -19,7 +19,7 @@ public class EntityBeanClassPrototype extends AbstractClassPrototype
     public void initialContextBuilder(Map<String, Object> globals)
     {
         //Package Name
-        packageName = globals.get("packageName") + ".models";
+        classPackage = "models";
 
         //ADDING IMPORTS
         imports.add("import javax.persistence.*;");
@@ -34,7 +34,7 @@ public class EntityBeanClassPrototype extends AbstractClassPrototype
     public String getVMByCategory(String classCategory)
     {
         // In future it can driven based upon version of the vm file
-        setVmPath("vtemplates/repository_v1.vm");
+        setVmPath("vtemplates/entity_v1.vm");
         return "";
     }
 

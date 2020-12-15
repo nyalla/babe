@@ -1,51 +1,43 @@
-/*
 package com.babe.framework;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ProjectTree
 {
-    private List<ControllerClassPrototype> controllers;
-    private List<ServiceClassPrototype> services;
-    private List<RepositoryClassPrototype> repositories;
+    private List<EntityBeanClassPrototype> entityBeansList=new LinkedList<>();
+    private List<RepositoryClassProtoType> repositoryList = new LinkedList<>();
     private PomPrototype pom;
 
-    public ProjectTree(List<ControllerClassPrototype> controllers, List<ServiceClassPrototype> services, List<RepositoryClassPrototype> repositories, PomPrototype pom)
+    public ProjectTree()
     {
-        this.controllers = controllers;
-        this.services = services;
-        this.repositories = repositories;
+    }
+
+    public ProjectTree(List<EntityBeanClassPrototype> entityBeansList, List<RepositoryClassProtoType> repositoryList, PomPrototype pom)
+    {
+        this.entityBeansList = entityBeansList;
+        this.repositoryList = repositoryList;
         this.pom = pom;
     }
 
-    public List<ControllerClassPrototype> getControllers()
+    public List<EntityBeanClassPrototype> getEntityBeansList()
     {
-        return controllers;
+        return entityBeansList;
     }
 
-    public void setControllers(List<ControllerClassPrototype> controllers)
+    public void setEntityBeansList(List<EntityBeanClassPrototype> entityBeansList)
     {
-        this.controllers = controllers;
+        this.entityBeansList = entityBeansList;
     }
 
-    public List<ServiceClassPrototype> getServices()
+    public List<RepositoryClassProtoType> getRepositoryList()
     {
-        return services;
+        return repositoryList;
     }
 
-    public void setServices(List<ServiceClassPrototype> services)
+    public void setRepositoryList(List<RepositoryClassProtoType> repositoryList)
     {
-        this.services = services;
-    }
-
-    public List<RepositoryClassPrototype> getRepositories()
-    {
-        return repositories;
-    }
-
-    public void setRepositories(List<RepositoryClassPrototype> repositories)
-    {
-        this.repositories = repositories;
+        this.repositoryList = repositoryList;
     }
 
     public PomPrototype getPom()
@@ -58,4 +50,3 @@ public class ProjectTree
         this.pom = pom;
     }
 }
-*/

@@ -18,27 +18,38 @@ public class MainClassBuilder
     public void constructClass(ClassPrototype proto, VelocityEngine velocityEngine, Map<String, Object> globals) throws IOException
     {
         VelocityContext context = new VelocityContext();
-        StringWriter writer = new StringWriter();
-
+        context.put("packageName", globals.get("packageName"));
         if (proto instanceof EntityBeanClassPrototype)
         {
-            EntityBeanClassPrototype repoClass = (EntityBeanClassPrototype) proto;
-
-            Template t = velocityEngine.getTemplate(repoClass.getVmPath());
-            context.put("class", repoClass);
-            context.put("packagename", globals.get("packageName"));
-            t.merge(context, writer);
-
-            File myfile = new File(
-                    BASE_PATH + globals.get("projectName") + SRC_TO_COM + globals.get("appName")
-                            + File.separator + "models" + File.separator
-                            + repoClass.getClassName() + PortalConstants.JAVA_EXTENSION);
-            FileUtils.touch(myfile);
-
-            try (FileOutputStream fis = new FileOutputStream(myfile))
+            EntityBeanClassPrototype classInstance = (EntityBeanClassPrototype) proto;
+            context.put("class", classInstance);
+            generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
+        }
+        else
+            if (proto instanceof RepositoryClassProtoType)
             {
-                fis.write(writer.toString().getBytes(Charset.defaultCharset()));
+                RepositoryClassProtoType classInstance = (RepositoryClassProtoType) proto;
+                context.put("class", classInstance);
+                generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
             }
+    }
+
+    public void generateClassFile(VelocityEngine velocityEngine, String vmPath, VelocityContext context, Map<String, Object> globals, String fileName, String classPackage) throws IOException
+    {
+        StringWriter writer = new StringWriter();
+        Template t = velocityEngine.getTemplate(vmPath);
+
+        t.merge(context, writer);
+
+        File myfile = new File(
+                BASE_PATH + globals.get("projectName") + SRC_TO_COM + globals.get("appName")
+                        + File.separator + classPackage + File.separator
+                        + fileName + PortalConstants.JAVA_EXTENSION);
+        FileUtils.touch(myfile);
+
+        try (FileOutputStream fis = new FileOutputStream(myfile))
+        {
+            fis.write(writer.toString().getBytes(Charset.defaultCharset()));
         }
     }
 }

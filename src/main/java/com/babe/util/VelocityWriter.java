@@ -1,10 +1,7 @@
 package com.babe.util;
 
 import com.babe.beans.Payload;
-import com.babe.framework.ClassPrototype;
-import com.babe.framework.DefaultDirectoryManager;
-import com.babe.framework.MainClassBuilder;
-import com.babe.framework.EntityBeanClassPrototype;
+import com.babe.framework.*;
 import com.google.gson.Gson;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
@@ -77,14 +74,24 @@ public class VelocityWriter
         DefaultDirectoryManager dm = new DefaultDirectoryManager();
         dm.createDefaultDirectory(payload.getProjectName(), appName);
 
-        ClassPrototype repositoryClass = new EntityBeanClassPrototype(
-                payload.getTableName().substring(0, 1).toUpperCase() + payload.getTableName().substring(1), "",globals);
-        repositoryClass.setClassFields(payload.getFieldDetails());
+        ProjectTree project = new ProjectTree();
+
+        EntityBeanClassPrototype entityBean = new EntityBeanClassPrototype(
+                payload.getTableName().substring(0, 1).toUpperCase()
+                        + payload.getTableName().substring(1), "", globals);
+        entityBean.setClassFields(payload.getFieldDetails());
+        project.getEntityBeansList().add(entityBean);
+
+        RepositoryClassProtoType repository = new RepositoryClassProtoType(
+                payload.getTableName().substring(0, 1).toUpperCase()
+                        + payload.getTableName().substring(1), "", globals, entityBean);
+        project.getRepositoryList().add(repository);
+
 
         MainClassBuilder builder = new MainClassBuilder();
 
-        builder.constructClass(repositoryClass, velocityEngine, globals);
-
+        builder.constructClass(entityBean, velocityEngine, globals);
+        builder.constructClass(repository, velocityEngine, globals);
         /*
         PackageManager model = new ModelPackageManager();
         model.buildPackageContexts(globals,payload.getFieldDetails());
