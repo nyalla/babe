@@ -10,7 +10,7 @@ sample JSON which generate spring boot project will be like below.,
 	"tableName": "customer",
 	"tableSchemaNeeded": true,
 	"isJpa": true,
-	"columnDetails": [{
+	"fieldDetails": [{
 			"fieldName": "id",
 			"fieldType": "int",
 			"isCustomType": false,
@@ -34,6 +34,13 @@ sample JSON which generate spring boot project will be like below.,
 			"isCustomType": true,
 			"isIdentity": false
 		}
-	]
-
+	],
+	"applicationProperties":{
+	"port":"8908",
+	"contextPath":"management",
+	"dataSourceUrl":"jdbc:mysql://localhost:9999",
+	"dataBaseName":"base",
+	"dataSourceUserName":"root",
+	"getDataSourcePassword":"root"
+	}
 }
