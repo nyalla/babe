@@ -18,40 +18,47 @@ public class VelocityWriter
     {
         String projectName = "babe";
 
-        String payLoadJson = "{\n" +
-                "\t\"projectName\": \"babe\",\n" +
-                "\t\"isSpringBoot\": \"yes\",\n" +
-                "\t\"backEndDB\": \"mysql\",\n" +
-                "\t\"tableName\": \"customer\",\n" +
-                "\t\"tableSchemaNeeded\": true,\n" +
-                "\t\"isJpa\": true,\n" +
-                "\t\"fieldDetails\": [{\n" +
-                "\t\t\t\"fieldName\": \"id\",\n" +
-                "\t\t\t\"fieldType\": \"int\",\n" +
-                "\t\t\t\"isCustomType\": false,\n" +
-                "\t\t\t\"isIdentity\": true\n" +
-                "\t\t},\n" +
-                "\t\t{\n" +
-                "\t\t\t\"fieldName\": \"firstName\",\n" +
-                "\t\t\t\"fieldType\": \"string\",\n" +
-                "\t\t\t\"isCustomType\": false,\n" +
-                "\t\t\t\"isIdentity\": false\n" +
-                "\t\t},\n" +
-                "\t\t{\n" +
-                "\t\t\t\"fieldName\": \"lastName\",\n" +
-                "\t\t\t\"fieldType\": \"string\",\n" +
-                "\t\t\t\"isCustomType\": false,\n" +
-                "\t\t\t\"isIdentity\": false\n" +
-                "\t\t},\n" +
-                "\t\t{\n" +
-                "\t\t\t\"fieldName\": \"dob\",\n" +
-                "\t\t\t\"fieldType\": \"date\",\n" +
-                "\t\t\t\"isCustomType\": true,\n" +
-                "\t\t\t\"isIdentity\": false\n" +
-                "\t\t}\n" +
-                "\t]\n" +
-                "\n" +
-                "}";
+        String payLoadJson = "{\n"
+                + "\t\"projectName\": \"babe\",\n"
+                + "\t\"isSpringBoot\": \"yes\",\n"
+                + "\t\"backEndDB\": \"mysql\",\n"
+                + "\t\"tableName\": \"customer\",\n"
+                + "\t\"tableSchemaNeeded\": true,\n"
+                + "\t\"isJpa\": true,\n"
+                + "\t\"fieldDetails\": [{\n"
+                + "\t\t\t\"fieldName\": \"id\",\n"
+                + "\t\t\t\"fieldType\": \"int\",\n"
+                + "\t\t\t\"isCustomType\": false,\n"
+                + "\t\t\t\"isIdentity\": true\n"
+                + "\t\t},\n"
+                + "\t\t{\n"
+                + "\t\t\t\"fieldName\": \"firstName\",\n"
+                + "\t\t\t\"fieldType\": \"String\",\n"
+                + "\t\t\t\"isCustomType\": false,\n"
+                + "\t\t\t\"isIdentity\": false\n"
+                + "\t\t},\n"
+                + "\t\t{\n"
+                + "\t\t\t\"fieldName\": \"lastName\",\n"
+                + "\t\t\t\"fieldType\": \"String\",\n"
+                + "\t\t\t\"isCustomType\": false,\n"
+                + "\t\t\t\"isIdentity\": false\n"
+                + "\t\t},\n"
+                + "\t\t{\n"
+                + "\t\t\t\"fieldName\": \"dob\",\n"
+                + "\t\t\t\"fieldType\": \"LocalDate\",\n"
+                + "\t\t\t\"isCustomType\": true,\n"
+                + "\t\t\t\"isIdentity\": false\n"
+                + "\t\t}\n"
+                + "\t],\n"
+                + "\t\"applicationProperties\":{\n"
+                + "\t\"port\":\"8908\",\n"
+                + "\t\"contextPath\":\"management\",\n"
+                + "\t\"dataSourceUrl\":\"jdbc:mysql://localhost:9999\",\n"
+                + "\t\"dataBaseName\":\"base\",\n"
+                + "\t\"dataSourceUserName\":\"root\",\n"
+                + "\t\"getDataSourcePassword\":\"root\"\n"
+                + "\t}\n"
+                + "}";
         String appName = "pilot";
 
         // Creating a Gson Object
@@ -93,9 +100,14 @@ public class VelocityWriter
         project.getControllerList().add(controller);
 
         ApplicationClassPrototype application = new ApplicationClassPrototype(
-                payload.getTableName().substring(0, 1).toUpperCase()
-                        + payload.getTableName().substring(1), "", globals);
+                appName.substring(0, 1).toUpperCase()
+                        + appName.substring(1), "", globals);
         project.setApplicationClassPrototype(application);
+
+        ApplicationPropertiesPrototype propertiesPrototype = new ApplicationPropertiesPrototype(payload.getApplicationProperties());
+
+
+        PomPrototype pom = new PomPrototype();
 
 
         MainClassBuilder builder = new MainClassBuilder();
@@ -103,7 +115,8 @@ public class VelocityWriter
         builder.constructClass(entityBean, velocityEngine, globals);
         builder.constructClass(repository, velocityEngine, globals);
         builder.constructClass(controller, velocityEngine, globals);
-        builder.constructClass(application,velocityEngine,globals);
+        builder.constructClass(application, velocityEngine, globals);
+        builder.constructProperties( propertiesPrototype,velocityEngine, globals);
         /*
         PackageManager model = new ModelPackageManager();
         model.buildPackageContexts(globals,payload.getFieldDetails());

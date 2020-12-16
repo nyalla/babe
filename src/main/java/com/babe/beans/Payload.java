@@ -10,6 +10,17 @@ private String tableName;
 private boolean tableSchemaNeeded;
 private boolean isJpa;
 private List<FieldDetails> fieldDetails;
+private ApplicationProperties applicationProperties;
+
+    public ApplicationProperties getApplicationProperties()
+    {
+        return applicationProperties;
+    }
+
+    public void setApplicationProperties(ApplicationProperties applicationProperties)
+    {
+        this.applicationProperties = applicationProperties;
+    }
 
     public String getProjectName() {
         return projectName;

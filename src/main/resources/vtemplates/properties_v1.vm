@@ -1,0 +1,11 @@
+server.port = $class.port
+spring.application.name = $globals.get("appName")service
+
+server.servlet.context-path=/$class.contextPath
+
+#SQL properties
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+spring.jpa.show-sql=true
+spring.datasource.url=${class.dataSourceUrl}/${class.dataBaseName}
+spring.datasource.username=$class.dataSourceUserName
+spring.datasource.password=$class.getDataSourcePassword

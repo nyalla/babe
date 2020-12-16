@@ -10,12 +10,11 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Map;
 
-import static com.babe.constants.PortalConstants.BASE_PATH;
-import static com.babe.constants.PortalConstants.SRC_TO_COM;
+import static com.babe.constants.PortalConstants.*;
 
 public class MainClassBuilder
 {
-    public void constructClass(ClassPrototype proto, VelocityEngine velocityEngine, Map<String, Object> globals) throws IOException
+    public void constructClass(ClassPrototype proto, VelocityEngine velocityEngine, Map<String, Object> globals)
     {
         VelocityContext context = new VelocityContext();
         context.put("packageName", globals.get("packageName"));
@@ -23,49 +22,64 @@ public class MainClassBuilder
         {
             EntityBeanClassPrototype classInstance = (EntityBeanClassPrototype) proto;
             context.put("class", classInstance);
-            generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
+            generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals,
+                    classInstance.getClassName() + JAVA_EXTENSION, classInstance.getClassPackage(), true);
         }
         else
             if (proto instanceof RepositoryClassProtoType)
             {
                 RepositoryClassProtoType classInstance = (RepositoryClassProtoType) proto;
                 context.put("class", classInstance);
-                generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
+                generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals,
+                        classInstance.getClassName() + JAVA_EXTENSION, classInstance.getClassPackage(), true);
             }
             else
                 if (proto instanceof ControllerClassPrototype)
                 {
                     ControllerClassPrototype classInstance = (ControllerClassPrototype) proto;
                     context.put("class", classInstance);
-                    generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
+                    generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals,
+                            classInstance.getClassName() + JAVA_EXTENSION, classInstance.getClassPackage(), true);
                 }
                 else
                     if (proto instanceof ApplicationClassPrototype)
                     {
                         ApplicationClassPrototype classInstance = (ApplicationClassPrototype) proto;
                         context.put("class", classInstance);
-                        generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
+
+                        generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals,
+                                classInstance.getClassName() + JAVA_EXTENSION, classInstance.getClassPackage(), true);
                     }
     }
 
-    public void generateClassFile(VelocityEngine velocityEngine, String vmPath, VelocityContext context, Map<String, Object> globals, String fileName, String classPackage) throws IOException
+    public void constructProperties(ApplicationPropertiesPrototype prop, VelocityEngine velocityEngine, Map<String, Object> globals)
     {
-        StringWriter writer = new StringWriter();
-        Template t = velocityEngine.getTemplate(vmPath);
+        VelocityContext context = new VelocityContext();
+        context.put("class", prop.getApplicationProperties());
+        context.put("globals", globals);
+        generateClassFile(velocityEngine, prop.getVmPath(), context, globals, prop.getFileName(), "", false);
+    }
 
-        t.merge(context, writer);
-
-        String packageFolder = classPackage.isEmpty() ? "" : classPackage + File.separator;
-
-        File myfile = new File(
-                BASE_PATH + globals.get("projectName") + SRC_TO_COM + globals.get("appName")
-                        + File.separator + packageFolder
-                        + fileName + PortalConstants.JAVA_EXTENSION);
-        FileUtils.touch(myfile);
-
-        try (FileOutputStream fis = new FileOutputStream(myfile))
+    public void generateClassFile(VelocityEngine velocityEngine, String vmPath, VelocityContext context, Map<String, Object> globals, String fileName, String classPackage, boolean isSrc)
+    {
+        try
         {
-            fis.write(writer.toString().getBytes(Charset.defaultCharset()));
+            StringWriter writer = new StringWriter();
+            Template t = velocityEngine.getTemplate(vmPath);
+
+            t.merge(context, writer);
+
+            File myfile = new File(ProjectPathResolver.pathGetter(globals, fileName, classPackage, isSrc));
+            FileUtils.touch(myfile);
+
+            try (FileOutputStream fis = new FileOutputStream(myfile))
+            {
+                fis.write(writer.toString().getBytes(Charset.defaultCharset()));
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
+
     }
 }
