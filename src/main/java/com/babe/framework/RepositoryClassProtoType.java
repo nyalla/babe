@@ -1,8 +1,5 @@
 package com.babe.framework;
 
-import com.babe.beans.FieldDetails;
-
-import java.util.List;
 import java.util.Map;
 
 public class RepositoryClassProtoType extends AbstractClassPrototype
@@ -24,12 +21,6 @@ public class RepositoryClassProtoType extends AbstractClassPrototype
         imports.add("import " + globals.get("packageName") + "." + entityBeanClassPrototype.getClassPackage());
         imports.add("import org.springframework.data.repository.CrudRepository;");
         getVMByCategory("");
-    }
-
-    @Override
-    public String setClassFields(List<FieldDetails> fields)
-    {
-        return null;
     }
 
     @Override

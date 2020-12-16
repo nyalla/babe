@@ -14,14 +14,12 @@ public class $class.className {
 $autowireClasses ;
 #end
 
-  @PostMapping(path = "/$class.entityBeanClassPrototype.className", consumes = "application/json")
-    public ResponseEntity<Object> add$class.className (@RequestBody ${class.entityBeanClassPrototype.className} member)
+  @PostMapping(path = "/$class.repositoryClassProtoType.entityBeanClassPrototype.className", consumes = "application/json")
+    public ResponseEntity<Object> $class.entityBeanClassPrototype.className (@RequestBody ${class.repositoryClassProtoType.entityBeanClassPrototype.className} member)
     {
         try
         {
-        #set($Controller_name = ${StringUtils.removeAndHump(${class.repositoryClassProtoType.className}, ".")})
-        #set($Controller_name = $Controller_name.substring(0,1).toLowerCase() + $Controller_name.substring(1))
-            ${Controller_name}.save(member);
+            ${class.repositoryClassProtoType.entityBeanClassPrototype.className}.save(member);
 
             return ResponseEntity.ok()
                     .body("Success");

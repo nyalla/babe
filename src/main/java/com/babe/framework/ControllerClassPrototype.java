@@ -1,20 +1,15 @@
 package com.babe.framework;
 
-import com.babe.beans.FieldDetails;
-
-import java.util.List;
 import java.util.Map;
 
 public class ControllerClassPrototype extends AbstractClassPrototype
 {
     public RepositoryClassProtoType repositoryClassProtoType;
-    public EntityBeanClassPrototype entityBeanClassPrototype;
 
-    public ControllerClassPrototype(String className, String classCategory, Map<String, Object> globals, RepositoryClassProtoType repository, EntityBeanClassPrototype entityBean)
+    public ControllerClassPrototype(String className, String classCategory, Map<String, Object> globals, RepositoryClassProtoType repository)
     {
         super(className + "Controller", classCategory);
         this.repositoryClassProtoType = repository;
-        this.entityBeanClassPrototype = entityBean;
         initialContextBuilder(globals);
 
     }
@@ -25,8 +20,8 @@ public class ControllerClassPrototype extends AbstractClassPrototype
         //Package Name
         classPackage = "controller";
 
-        imports.add("import " + globals.get("packageName") + "." + entityBeanClassPrototype.getClassPackage() + "."
-                + entityBeanClassPrototype.getClassName());
+        imports.add("import " + globals.get("packageName") + "." + repositoryClassProtoType.getEntityBeanClassPrototype().getClassPackage() + "."
+                + repositoryClassProtoType.getEntityBeanClassPrototype().getClassName());
         imports.add("import " + globals.get("packageName") + "." + repositoryClassProtoType.getClassPackage() + "."
                 + repositoryClassProtoType.getClassName());
         imports.add("import org.springframework.web.bind.annotation.*;");
@@ -39,12 +34,6 @@ public class ControllerClassPrototype extends AbstractClassPrototype
                 repositoryClassProtoType.getClassName() + " " + repositoryClassProtoType.getClassName().toLowerCase());
         getVMByCategory("");
 
-    }
-
-    @Override
-    public String setClassFields(List<FieldDetails> fields)
-    {
-        return null;
     }
 
     @Override
@@ -65,13 +54,4 @@ public class ControllerClassPrototype extends AbstractClassPrototype
         this.repositoryClassProtoType = repositoryClassProtoType;
     }
 
-    public EntityBeanClassPrototype getEntityBeanClassPrototype()
-    {
-        return entityBeanClassPrototype;
-    }
-
-    public void setEntityBeanClassPrototype(EntityBeanClassPrototype entityBeanClassPrototype)
-    {
-        this.entityBeanClassPrototype = entityBeanClassPrototype;
-    }
 }

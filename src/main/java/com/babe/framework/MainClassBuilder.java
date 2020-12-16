@@ -39,6 +39,13 @@ public class MainClassBuilder
                     context.put("class", classInstance);
                     generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
                 }
+                else
+                    if (proto instanceof ApplicationClassPrototype)
+                    {
+                        ApplicationClassPrototype classInstance = (ApplicationClassPrototype) proto;
+                        context.put("class", classInstance);
+                        generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals, classInstance.getClassName(), classInstance.getClassPackage());
+                    }
     }
 
     public void generateClassFile(VelocityEngine velocityEngine, String vmPath, VelocityContext context, Map<String, Object> globals, String fileName, String classPackage) throws IOException
@@ -48,9 +55,11 @@ public class MainClassBuilder
 
         t.merge(context, writer);
 
+        String packageFolder = classPackage.isEmpty() ? "" : classPackage + File.separator;
+
         File myfile = new File(
                 BASE_PATH + globals.get("projectName") + SRC_TO_COM + globals.get("appName")
-                        + File.separator + classPackage + File.separator
+                        + File.separator + packageFolder
                         + fileName + PortalConstants.JAVA_EXTENSION);
         FileUtils.touch(myfile);
 

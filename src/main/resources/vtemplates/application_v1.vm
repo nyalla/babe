@@ -1,0 +1,15 @@
+package $packageName ;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ${class.className}
+{
+
+	public static void main(String[] args) {
+		System.out.println("Service started..........");
+		SpringApplication.run(${class.className}.class, args);
+	}
+
+}

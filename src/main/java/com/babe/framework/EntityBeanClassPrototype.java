@@ -38,7 +38,6 @@ public class EntityBeanClassPrototype extends AbstractClassPrototype
         return "";
     }
 
-    @Override
     public String setClassFields(List<FieldDetails> tableFields)
     {
         for (FieldDetails fd : tableFields)

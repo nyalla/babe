@@ -8,17 +8,19 @@ public class ProjectTree
     private List<EntityBeanClassPrototype> entityBeansList=new LinkedList<>();
     private List<RepositoryClassProtoType> repositoryList = new LinkedList<>();
     private List<ControllerClassPrototype> controllerList = new LinkedList<>();
+    private ApplicationClassPrototype applicationClassPrototype;
     private PomPrototype pom;
 
     public ProjectTree()
     {
     }
 
-    public ProjectTree(List<EntityBeanClassPrototype> entityBeansList, List<RepositoryClassProtoType> repositoryList, List<ControllerClassPrototype> controllerList, PomPrototype pom)
+    public ProjectTree(List<EntityBeanClassPrototype> entityBeansList, List<RepositoryClassProtoType> repositoryList, List<ControllerClassPrototype> controllerList, ApplicationClassPrototype applicationClassPrototype, PomPrototype pom)
     {
         this.entityBeansList = entityBeansList;
         this.repositoryList = repositoryList;
         this.controllerList = controllerList;
+        this.applicationClassPrototype = applicationClassPrototype;
         this.pom = pom;
     }
 
@@ -50,6 +52,16 @@ public class ProjectTree
     public void setControllerList(List<ControllerClassPrototype> controllerList)
     {
         this.controllerList = controllerList;
+    }
+
+    public ApplicationClassPrototype getApplicationClassPrototype()
+    {
+        return applicationClassPrototype;
+    }
+
+    public void setApplicationClassPrototype(ApplicationClassPrototype applicationClassPrototype)
+    {
+        this.applicationClassPrototype = applicationClassPrototype;
     }
 
     public PomPrototype getPom()

@@ -42,7 +42,7 @@ public class ModelPackageManager implements PackageManager {
     @Override
     public void constructPackageContents(VelocityEngine velocityEngine) {
         //Selecting VM file with content and writing context data into it
-        Template t = velocityEngine.getTemplate("vtemplates/class.vm");
+        Template t = velocityEngine.getTemplate("vtemplates/application_v1.vm");
         t.merge(context, writer);
     }
 
