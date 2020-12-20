@@ -5,16 +5,15 @@ import com.babe.framework.*;
 import com.babe.util.ConvertUtil;
 import com.babe.util.FrameworkUtil;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import static com.babe.constants.PortalConstants.BASE_PATH;
 
+@Service
 public class ProjectCreationService
 {
 
