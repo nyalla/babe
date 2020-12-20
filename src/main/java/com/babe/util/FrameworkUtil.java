@@ -1,4 +1,4 @@
-package com.babe.framework;
+package com.babe.util;
 
 import com.babe.constants.PortalConstants;
 

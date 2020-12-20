@@ -1,5 +1,7 @@
-package com.babe.framework;
+package com.babe.services;
 
+import com.babe.framework.*;
+import com.babe.services.FileGeneratorService;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 

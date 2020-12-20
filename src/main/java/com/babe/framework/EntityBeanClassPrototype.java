@@ -1,6 +1,7 @@
 package com.babe.framework;
 
 import com.babe.beans.FieldDetails;
+import com.babe.constants.PortalStaticMaps;
 import com.google.common.base.CaseFormat;
 
 import java.util.ArrayList;
