@@ -1,14 +1,15 @@
 package com.babe.services;
 
 import com.babe.framework.*;
-import com.babe.services.FileGeneratorService;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 import static com.babe.constants.PortalConstants.*;
 
+@Service
 public class MainClassBuilder
 {
     public void constructClass(ClassPrototype proto, VelocityEngine velocityEngine, Map<String, Object> globals)
@@ -64,4 +65,6 @@ public class MainClassBuilder
         context.put("globals", globals);
         FileGeneratorService.generateBuildFile(velocityEngine, buildFilePrototype.getVmPath(), context, globals, buildFilePrototype.getClassName());
     }
+
+
 }

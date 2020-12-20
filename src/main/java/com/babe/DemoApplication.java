@@ -118,6 +118,8 @@ public class DemoApplication {
 
             BuildFilePrototype buildFilePrototype = new BuildFilePrototype(FrameworkUtil.getBuildType(payload.getBuild()).toString(), payload.getBuild(), payload.getBackEndDB(), payload.isJpa(), globals);
             project.setBuildFilePrototype(buildFilePrototype);
+
+
             MainClassBuilder builder = new MainClassBuilder();
 
             builder.constructClass(entityBean, velocityEngine, globals);
