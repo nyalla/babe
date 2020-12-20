@@ -15,7 +15,7 @@ $autowireClasses ;
 #end
 
   @PostMapping(path = "/$class.repositoryClassProtoType.entityBeanClassPrototype.className", consumes = "application/json")
-    public ResponseEntity<Object> $class.entityBeanClassPrototype.className (@RequestBody ${class.repositoryClassProtoType.entityBeanClassPrototype.className} member)
+    public ResponseEntity<Object> $class.repositoryClassProtoType.entityBeanClassPrototype.className (@RequestBody ${class.repositoryClassProtoType.entityBeanClassPrototype.className} member)
     {
         try
         {
@@ -30,4 +30,20 @@ $autowireClasses ;
                     .body("No Data as of now.");
         }
     }
+
+     @GetMapping("/$class.repositoryClassProtoType.entityBeanClassPrototype.className")
+        public ResponseEntity<Object> $class.repositoryClassProtoType.entityBeanClassPrototype.className ()
+        {
+            Object members =   ${class.repositoryClassProtoType.classInstanceName}.findAll();
+
+            if (members == null)
+            {
+                return ResponseEntity.badRequest()
+                        .body("No Data as of now.");
+            }
+            else
+            {
+                return ResponseEntity.ok()
+                        .body(members);
+            }
 }
