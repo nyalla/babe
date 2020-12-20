@@ -1,14 +1,17 @@
 package com.babe.framework;
 
+import com.google.common.base.CaseFormat;
+
 import java.util.Map;
 
 public class RepositoryClassProtoType extends AbstractClassPrototype
 {
     public EntityBeanClassPrototype entityBeanClassPrototype;
 
-    public RepositoryClassProtoType(String className, String classCategory, Map<String, Object> globals, EntityBeanClassPrototype bean)
+    public RepositoryClassProtoType(String classNameIni, String classCategory, Map<String, Object> globals, EntityBeanClassPrototype bean)
     {
-        super(className + "Repository", classCategory);
+        super(classNameIni + "Repository", classCategory);
+        classInstanceName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
         this.entityBeanClassPrototype = bean;
         initialContextBuilder(globals);
     }

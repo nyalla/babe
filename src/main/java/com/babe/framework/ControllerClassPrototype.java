@@ -1,14 +1,17 @@
 package com.babe.framework;
 
+import com.google.common.base.CaseFormat;
+
 import java.util.Map;
 
 public class ControllerClassPrototype extends AbstractClassPrototype
 {
     public RepositoryClassProtoType repositoryClassProtoType;
 
-    public ControllerClassPrototype(String className, String classCategory, Map<String, Object> globals, RepositoryClassProtoType repository)
+    public ControllerClassPrototype(String classNameInit, String classCategory, Map<String, Object> globals, RepositoryClassProtoType repository)
     {
-        super(className + "Controller", classCategory);
+        super(classNameInit + "Controller", classCategory);
+        classInstanceName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
         this.repositoryClassProtoType = repository;
         initialContextBuilder(globals);
 
@@ -20,7 +23,8 @@ public class ControllerClassPrototype extends AbstractClassPrototype
         //Package Name
         classPackage = "controller";
 
-        imports.add("import " + globals.get("packageName") + "." + repositoryClassProtoType.getEntityBeanClassPrototype().getClassPackage() + "."
+        imports.add("import " + globals.get("packageName") + "."
+                + repositoryClassProtoType.getEntityBeanClassPrototype().getClassPackage() + "."
                 + repositoryClassProtoType.getEntityBeanClassPrototype().getClassName());
         imports.add("import " + globals.get("packageName") + "." + repositoryClassProtoType.getClassPackage() + "."
                 + repositoryClassProtoType.getClassName());
@@ -31,7 +35,8 @@ public class ControllerClassPrototype extends AbstractClassPrototype
         classLevelAnnotation.add("@RestController");
 
         autowireClasses.add(
-                repositoryClassProtoType.getClassName() + " " + repositoryClassProtoType.getClassName().toLowerCase());
+                repositoryClassProtoType.getClassName() + " "
+                        + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, repositoryClassProtoType.getClassName()));
         getVMByCategory("");
 
     }

@@ -83,24 +83,20 @@ public class VelocityWriter
         ProjectTree project = new ProjectTree();
 
         EntityBeanClassPrototype entityBean = new EntityBeanClassPrototype(
-                payload.getTableName().substring(0, 1).toUpperCase()
-                        + payload.getTableName().substring(1), "", globals);
+                ConvertUtil.firstLetterCapital(payload.getTableName()), "", globals);
         entityBean.setClassFields(payload.getFieldDetails());
         project.getEntityBeansList().add(entityBean);
 
         RepositoryClassProtoType repository = new RepositoryClassProtoType(
-                payload.getTableName().substring(0, 1).toUpperCase()
-                        + payload.getTableName().substring(1), "", globals, entityBean);
+                ConvertUtil.firstLetterCapital(payload.getTableName()), "", globals, entityBean);
         project.getRepositoryList().add(repository);
 
         ControllerClassPrototype controller = new ControllerClassPrototype(
-                payload.getTableName().substring(0, 1).toUpperCase()
-                        + payload.getTableName().substring(1), "", globals, repository);
+                ConvertUtil.firstLetterCapital(payload.getTableName()) , "", globals, repository);
         project.getControllerList().add(controller);
 
         ApplicationClassPrototype application = new ApplicationClassPrototype(
-                payload.getAppName().substring(0, 1).toUpperCase()
-                        + payload.getAppName().substring(1), "", globals);
+                ConvertUtil.firstLetterCapital(payload.getAppName()) , "", globals);
         project.setApplicationClassPrototype(application);
 
         ApplicationPropertiesPrototype propertiesPrototype = new ApplicationPropertiesPrototype(payload.getApplicationProperties());

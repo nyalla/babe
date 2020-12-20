@@ -9,6 +9,7 @@ public abstract class AbstractClassPrototype implements ClassPrototype
     public String classPackage;
     public List<String> imports = new LinkedList<>();
     public String className;
+    public String classInstanceName;
     public List<String> classLevelAnnotation = new ArrayList<>();
     public String classCategory;
     public List<FieldPrototype> fields = new ArrayList<>();
@@ -115,5 +116,15 @@ public abstract class AbstractClassPrototype implements ClassPrototype
     public void setAutowireClasses(List<String> autowireClasses)
     {
         this.autowireClasses = autowireClasses;
+    }
+
+    public String getClassInstanceName()
+    {
+        return classInstanceName;
+    }
+
+    public void setClassInstanceName(String classInstanceName)
+    {
+        this.classInstanceName = classInstanceName;
     }
 }

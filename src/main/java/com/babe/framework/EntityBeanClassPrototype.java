@@ -9,9 +9,10 @@ import java.util.Map;
 
 public class EntityBeanClassPrototype extends AbstractClassPrototype
 {
-    public EntityBeanClassPrototype(String className, String classCategory, Map<String, Object> globals)
+    public EntityBeanClassPrototype(String classNameInit, String classCategory, Map<String, Object> globals)
     {
-        super(className, classCategory);
+        super(classNameInit, classCategory);
+        classInstanceName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
         initialContextBuilder(globals);
     }
 

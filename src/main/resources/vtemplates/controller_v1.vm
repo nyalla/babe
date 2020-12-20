@@ -19,7 +19,7 @@ $autowireClasses ;
     {
         try
         {
-            ${class.repositoryClassProtoType.entityBeanClassPrototype.className}.save(member);
+            ${class.repositoryClassProtoType.classInstanceName}.save(member);
 
             return ResponseEntity.ok()
                     .body("Success");

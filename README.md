@@ -1,6 +1,10 @@
 # babe
 Bootstrap Applied on BackEnd (Babe) >>> Open source tool to generate Rest CRUD Spring boot project 
 
+Known issues:
+While defining the fieldDetails.fieldType , currently int,string are supported
+
+
 sample JSON which generate spring boot project will be like below.,
 ```json
 {
@@ -46,3 +50,4 @@ sample JSON which generate spring boot project will be like below.,
 	"getDataSourcePassword":"root"
 	}
 }
+
