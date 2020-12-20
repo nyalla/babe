@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Payload {
 private String projectName;
+private String appName;
 private boolean isSpringBoot;
 private String backEndDB;
 private String tableName;
@@ -21,6 +22,16 @@ private ApplicationProperties applicationProperties;
     public void setApplicationProperties(ApplicationProperties applicationProperties)
     {
         this.applicationProperties = applicationProperties;
+    }
+
+    public String getAppName()
+    {
+        return appName;
+    }
+
+    public void setAppName(String appName)
+    {
+        this.appName = appName;
     }
 
     public String getProjectName() {

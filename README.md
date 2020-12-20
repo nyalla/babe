@@ -5,11 +5,13 @@ sample JSON which generate spring boot project will be like below.,
 ```json
 {
 	"projectName": "babe",
+    "appName": "pilot",
 	"isSpringBoot": "yes",
 	"backEndDB": "mysql",
 	"tableName": "customer",
 	"tableSchemaNeeded": true,
 	"isJpa": true,
+	"build": "maven", 
 	"fieldDetails": [{
 			"fieldName": "id",
 			"fieldType": "int",

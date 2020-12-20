@@ -16,10 +16,9 @@ public class VelocityWriter
 
     public static void main(String[] args) throws IOException
     {
-        String projectName = "babe";
-
         String payLoadJson = "{\n"
                 + "\t\"projectName\": \"babe\",\n"
+                + "\t\"appName\": \"pilot\",\n"
                 + "\t\"isSpringBoot\": \"yes\",\n"
                 + "\t\"backEndDB\": \"mysql\",\n"
                 + "\t\"tableName\": \"customer\",\n"
@@ -60,7 +59,6 @@ public class VelocityWriter
                 + "\t\"getDataSourcePassword\":\"root\"\n"
                 + "\t}\n"
                 + "}";
-        String appName = "pilot";
 
         // Creating a Gson Object
         Gson gson = new Gson();
@@ -69,8 +67,8 @@ public class VelocityWriter
                 Payload.class);
 
         Map<String, Object> globals = new HashMap<>();
-        globals.put("packageName", "com." + appName);
-        globals.put("appName", appName);
+        globals.put("packageName", "com." + payload.getAppName());
+        globals.put("appName", payload.getAppName());
         globals.put("projectName", payload.getProjectName());
 
         VelocityEngine velocityEngine = new VelocityEngine();
@@ -80,7 +78,7 @@ public class VelocityWriter
         velocityEngine.init(p);
 
         DefaultDirectoryManager dm = new DefaultDirectoryManager();
-        dm.createDefaultDirectory(payload.getProjectName(), appName);
+        dm.createDefaultDirectory(payload.getProjectName(), payload.getAppName());
 
         ProjectTree project = new ProjectTree();
 
@@ -101,13 +99,13 @@ public class VelocityWriter
         project.getControllerList().add(controller);
 
         ApplicationClassPrototype application = new ApplicationClassPrototype(
-                appName.substring(0, 1).toUpperCase()
-                        + appName.substring(1), "", globals);
+                payload.getAppName().substring(0, 1).toUpperCase()
+                        + payload.getAppName().substring(1), "", globals);
         project.setApplicationClassPrototype(application);
 
         ApplicationPropertiesPrototype propertiesPrototype = new ApplicationPropertiesPrototype(payload.getApplicationProperties());
 
-        BuildFilePrototype buildFilePrototype = new BuildFilePrototype(FrameworkUtil.getBuildType(payload.getBuild()).toString(), payload.getBuild(), payload.getBackEndDB(), payload.isJpa(),globals);
+        BuildFilePrototype buildFilePrototype = new BuildFilePrototype(FrameworkUtil.getBuildType(payload.getBuild()).toString(), payload.getBuild(), payload.getBackEndDB(), payload.isJpa(), globals);
         project.setBuildFilePrototype(buildFilePrototype);
         MainClassBuilder builder = new MainClassBuilder();
 
