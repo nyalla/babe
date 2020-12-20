@@ -25,6 +25,7 @@ public class VelocityWriter
                 + "\t\"tableName\": \"customer\",\n"
                 + "\t\"tableSchemaNeeded\": true,\n"
                 + "\t\"isJpa\": true,\n"
+                + "\t\"build\": \"maven\",\n"
                 + "\t\"fieldDetails\": [{\n"
                 + "\t\t\t\"fieldName\": \"id\",\n"
                 + "\t\t\t\"fieldType\": \"int\",\n"
@@ -106,9 +107,7 @@ public class VelocityWriter
 
         ApplicationPropertiesPrototype propertiesPrototype = new ApplicationPropertiesPrototype(payload.getApplicationProperties());
 
-
-        PomPrototype pom = new PomPrototype();
-
+        BuildFilePrototype buildFilePrototype = new BuildFilePrototype(FrameworkUtil.getBuildType(payload.getBuild()).toString(), payload.getBuild(), payload.getBackEndDB(), payload.isJpa(),globals);
 
         MainClassBuilder builder = new MainClassBuilder();
 
@@ -116,14 +115,8 @@ public class VelocityWriter
         builder.constructClass(repository, velocityEngine, globals);
         builder.constructClass(controller, velocityEngine, globals);
         builder.constructClass(application, velocityEngine, globals);
-        builder.constructProperties( propertiesPrototype,velocityEngine, globals);
-        /*
-        PackageManager model = new ModelPackageManager();
-        model.buildPackageContexts(globals,payload.getFieldDetails());
-        model.constructPackageContents(velocityEngine);
-        model.generatePackageFiles(globals);
-*/
-        System.out.println("aaa");
+        builder.constructProperties(propertiesPrototype, velocityEngine, globals);
+        builder.constructBuildFile(buildFilePrototype, velocityEngine, globals);
 
     }
 }

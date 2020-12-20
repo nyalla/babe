@@ -15,4 +15,12 @@ public class PortalConstants
     public static final String PROJECT_FILE_STRUCTURE =
             "E:\\projects" + File.separator + "babe" + File.separator + "standard-folder" + File.separator
                     + "project-name";
+
+    public enum DataBases
+    {
+        MYSQL, SQL, ORACLE, POSTGRES
+    }
+    public enum BuildType{
+        POM,GRADLE
+    }
 }

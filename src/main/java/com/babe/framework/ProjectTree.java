@@ -9,13 +9,13 @@ public class ProjectTree
     private List<RepositoryClassProtoType> repositoryList = new LinkedList<>();
     private List<ControllerClassPrototype> controllerList = new LinkedList<>();
     private ApplicationClassPrototype applicationClassPrototype;
-    private PomPrototype pom;
+    private BuildFilePrototype pom;
 
     public ProjectTree()
     {
     }
 
-    public ProjectTree(List<EntityBeanClassPrototype> entityBeansList, List<RepositoryClassProtoType> repositoryList, List<ControllerClassPrototype> controllerList, ApplicationClassPrototype applicationClassPrototype, PomPrototype pom)
+    public ProjectTree(List<EntityBeanClassPrototype> entityBeansList, List<RepositoryClassProtoType> repositoryList, List<ControllerClassPrototype> controllerList, ApplicationClassPrototype applicationClassPrototype, BuildFilePrototype pom)
     {
         this.entityBeansList = entityBeansList;
         this.repositoryList = repositoryList;
@@ -64,12 +64,12 @@ public class ProjectTree
         this.applicationClassPrototype = applicationClassPrototype;
     }
 
-    public PomPrototype getPom()
+    public BuildFilePrototype getPom()
     {
         return pom;
     }
 
-    public void setPom(PomPrototype pom)
+    public void setPom(BuildFilePrototype pom)
     {
         this.pom = pom;
     }

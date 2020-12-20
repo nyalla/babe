@@ -7,6 +7,7 @@ private String projectName;
 private boolean isSpringBoot;
 private String backEndDB;
 private String tableName;
+private String build;
 private boolean tableSchemaNeeded;
 private boolean isJpa;
 private List<FieldDetails> fieldDetails;
@@ -76,6 +77,16 @@ private ApplicationProperties applicationProperties;
 
     public void setFieldDetails(List<FieldDetails> fieldDetails) {
         this.fieldDetails = fieldDetails;
+    }
+
+    public String getBuild()
+    {
+        return build;
+    }
+
+    public void setBuild(String build)
+    {
+        this.build = build;
     }
 
     public Payload() {

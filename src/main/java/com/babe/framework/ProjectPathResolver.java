@@ -25,4 +25,11 @@ public class ProjectPathResolver
                             + File.separator + fileName;
         }
     }
+
+    public static String buildPathGetter(Map<String, Object> globals, String fileName)
+    {
+        return
+                BASE_PATH + globals.get("projectName") + File.separator
+                        + File.separator + fileName;
+    }
 }

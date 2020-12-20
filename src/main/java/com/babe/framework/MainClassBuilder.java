@@ -1,13 +1,8 @@
 package com.babe.framework;
 
-import com.babe.constants.PortalConstants;
-import org.apache.commons.io.FileUtils;
-import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-import java.io.*;
-import java.nio.charset.Charset;
 import java.util.Map;
 
 import static com.babe.constants.PortalConstants.*;
@@ -22,7 +17,7 @@ public class MainClassBuilder
         {
             EntityBeanClassPrototype classInstance = (EntityBeanClassPrototype) proto;
             context.put("class", classInstance);
-            generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals,
+            FileGeneratorService.generate(velocityEngine, classInstance.getVmPath(), context, globals,
                     classInstance.getClassName() + JAVA_EXTENSION, classInstance.getClassPackage(), true);
         }
         else
@@ -30,7 +25,7 @@ public class MainClassBuilder
             {
                 RepositoryClassProtoType classInstance = (RepositoryClassProtoType) proto;
                 context.put("class", classInstance);
-                generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals,
+                FileGeneratorService.generate(velocityEngine, classInstance.getVmPath(), context, globals,
                         classInstance.getClassName() + JAVA_EXTENSION, classInstance.getClassPackage(), true);
             }
             else
@@ -38,7 +33,7 @@ public class MainClassBuilder
                 {
                     ControllerClassPrototype classInstance = (ControllerClassPrototype) proto;
                     context.put("class", classInstance);
-                    generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals,
+                    FileGeneratorService.generate(velocityEngine, classInstance.getVmPath(), context, globals,
                             classInstance.getClassName() + JAVA_EXTENSION, classInstance.getClassPackage(), true);
                 }
                 else
@@ -47,7 +42,7 @@ public class MainClassBuilder
                         ApplicationClassPrototype classInstance = (ApplicationClassPrototype) proto;
                         context.put("class", classInstance);
 
-                        generateClassFile(velocityEngine, classInstance.getVmPath(), context, globals,
+                        FileGeneratorService.generate(velocityEngine, classInstance.getVmPath(), context, globals,
                                 classInstance.getClassName() + JAVA_EXTENSION, classInstance.getClassPackage(), true);
                     }
     }
@@ -57,29 +52,14 @@ public class MainClassBuilder
         VelocityContext context = new VelocityContext();
         context.put("class", prop.getApplicationProperties());
         context.put("globals", globals);
-        generateClassFile(velocityEngine, prop.getVmPath(), context, globals, prop.getFileName(), "", false);
+        FileGeneratorService.generate(velocityEngine, prop.getVmPath(), context, globals, prop.getFileName(), "", false);
     }
 
-    public void generateClassFile(VelocityEngine velocityEngine, String vmPath, VelocityContext context, Map<String, Object> globals, String fileName, String classPackage, boolean isSrc)
+    public void constructBuildFile(BuildFilePrototype buildFilePrototype, VelocityEngine velocityEngine, Map<String, Object> globals)
     {
-        try
-        {
-            StringWriter writer = new StringWriter();
-            Template t = velocityEngine.getTemplate(vmPath);
-
-            t.merge(context, writer);
-
-            File myfile = new File(ProjectPathResolver.pathGetter(globals, fileName, classPackage, isSrc));
-            FileUtils.touch(myfile);
-
-            try (FileOutputStream fis = new FileOutputStream(myfile))
-            {
-                fis.write(writer.toString().getBytes(Charset.defaultCharset()));
-            }
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
+        VelocityContext context = new VelocityContext();
+        context.put("class", buildFilePrototype);
+        context.put("globals", globals);
+        FileGeneratorService.generateBuildFile(velocityEngine, buildFilePrototype.getVmPath(), context, globals, buildFilePrototype.getClassName());
     }
 }
