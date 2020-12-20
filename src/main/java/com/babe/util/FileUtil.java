@@ -1,6 +1,5 @@
 package com.babe.util;
 
-import com.babe.model.BinaryOutputWrapper;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

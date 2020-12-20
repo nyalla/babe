@@ -1,4 +1,4 @@
-package com.babe.model;
+package com.babe.util;
 
 import org.springframework.http.HttpHeaders;
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import com.babe.model.BinaryOutputWrapper;
+import com.babe.util.BinaryOutputWrapper;
 import com.babe.util.FileUtil;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
