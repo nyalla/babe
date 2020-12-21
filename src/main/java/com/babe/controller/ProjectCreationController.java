@@ -38,7 +38,7 @@ public class ProjectCreationController
         }
         else
         {
-            return new ResponseEntity<>(projectByteContent, headers, HttpStatus.OK);
+            return new ResponseEntity<>("Nothing is there ", HttpStatus.BAD_REQUEST);
         }
     }
 }
