@@ -4,11 +4,8 @@ Bootstrap Applied on BackEnd (Babe) >>> Open source tool to generate Rest CRUD S
 
 Known issues:
 While defining the fieldDetails.fieldType , currently int,string are supported
+As there is no file server as of now, you have to download the sample project structure in resources directory and change Base path[PortalConstants.PROJECT_FILE_STRUCTURE] accordingly.
 
-How to test:
-
-Import the files in IDE..
-Run TestFrameWork class inside DemoApplication class
 
 Try with below sample file. 
 
