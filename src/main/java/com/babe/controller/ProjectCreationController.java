@@ -2,7 +2,6 @@ package com.babe.controller;
 
 import com.babe.beans.Payload;
 import com.babe.services.ProjectCreationService;
-import com.babe.util.BinaryOutputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

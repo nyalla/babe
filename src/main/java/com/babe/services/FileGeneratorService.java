@@ -1,17 +1,13 @@
 package com.babe.services;
 
-import com.babe.util.BinaryOutputWrapper;
 import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Map;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
