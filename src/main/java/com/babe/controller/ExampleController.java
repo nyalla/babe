@@ -18,22 +18,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class ExampleController {
+public class ExampleController
+{
 
     @Autowired
     FileUtil fileUtil;
 
-    @GetMapping("/somepath/pdf")
-    public ResponseEntity<?> generatePDF() {
+    @GetMapping("/aaa")
+    public ResponseEntity<?> generatePDF()
+    {
         BinaryOutputWrapper output = new BinaryOutputWrapper();
-        try {
-            String inputFile = "sample.pdf";
-            //output = fileUtil.prepDownloadAsPDF(inputFile);
-            ArrayList<File> files = new ArrayList<>(2);
-            ArrayList<String> filesAsString = new ArrayList<>(2);
-            files.add(new File("README.md"));
-            output= fileUtil.prepDownloadAsZIP(filesAsString) ;
-        } catch (IOException e) {
+        try
+        {
+            output = fileUtil.pack("E:\\trash\\babe", "");
+        } catch (IOException e)
+        {
             e.printStackTrace();
             //Do something when exception is thrown
         }
@@ -41,8 +40,9 @@ public class ExampleController {
     }
 
 
-    @PostMapping(path = "/trigger", consumes = "application/json",produces="application/zip")
-    public void trigger(HttpServletResponse response, @RequestBody String json) throws IOException {
+    @PostMapping(path = "/trigger", consumes = "application/json", produces = "application/zip")
+    public void trigger(HttpServletResponse response, @RequestBody String json) throws IOException
+    {
         System.out.println("asa");
         //setting headers
         response.setStatus(HttpServletResponse.SC_OK);
@@ -55,7 +55,8 @@ public class ExampleController {
         files.add(new File("READMEnew.md"));
 
         // package files
-        for (File file : files) {
+        for (File file : files)
+        {
             //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -70,8 +71,9 @@ public class ExampleController {
 
     }
 
-    @RequestMapping(value="/zip", produces="application/zip")
-    public void zipFiles(HttpServletResponse response) throws IOException {
+    @GetMapping(value = "/zip", produces = "application/zip")
+    public void zipFiles(HttpServletResponse response) throws IOException
+    {
 
         //setting headers
         response.setStatus(HttpServletResponse.SC_OK);
@@ -84,7 +86,8 @@ public class ExampleController {
         files.add(new File("README.md"));
 
         // package files
-        for (File file : files) {
+        for (File file : files)
+        {
             //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
             FileInputStream fileInputStream = new FileInputStream(file);

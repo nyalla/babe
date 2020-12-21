@@ -65,6 +65,4 @@ public class MainClassBuilder
         context.put("globals", globals);
         FileGeneratorService.generateBuildFile(velocityEngine, buildFilePrototype.getVmPath(), context, globals, buildFilePrototype.getClassName());
     }
-
-
 }

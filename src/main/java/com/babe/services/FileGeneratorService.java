@@ -1,15 +1,21 @@
 package com.babe.services;
 
+import com.babe.util.BinaryOutputWrapper;
 import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Map;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class FileGeneratorService
 {
@@ -52,5 +58,31 @@ public class FileGeneratorService
         {
             e.printStackTrace();
         }
+    }
+
+    // zip a directory, including sub files and sub directories
+    public static byte[] pack(String sourceDirPath) throws IOException
+    {
+        Path pp = Paths.get(sourceDirPath);
+        ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+        try (ZipOutputStream zs = new ZipOutputStream(byteOutputStream);
+             Stream<Path> paths = Files.walk(pp))
+        {
+            paths
+                    .filter(path -> !Files.isDirectory(path))
+                    .forEach(path -> {
+                        ZipEntry zipEntry = new ZipEntry(pp.relativize(path).toString());
+                        try
+                        {
+                            zs.putNextEntry(zipEntry);
+                            Files.copy(path, zs);
+                            zs.closeEntry();
+                        } catch (IOException e)
+                        {
+                            System.err.println(e);
+                        }
+                    });
+        }
+        return byteOutputStream.toByteArray();
     }
 }

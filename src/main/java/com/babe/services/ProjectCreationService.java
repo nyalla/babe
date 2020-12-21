@@ -8,6 +8,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public class ProjectCreationService
     @Autowired
     VelocityService velocityService;
 
-    public Object createProject(Payload payload)
+    public byte[] createProject(Payload payload)
     {
 
         ProjectTree project = new ProjectTree();
@@ -78,7 +79,16 @@ public class ProjectCreationService
 
         String generatedProject = BASE_PATH + globals.get("projectName");
 
-        return null;
-    }
+        //Create Zip folder of the project directory
+        try
+        {
+            byte[] byteContent = FileGeneratorService.pack(generatedProject);
+            return byteContent;
 
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
