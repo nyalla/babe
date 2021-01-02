@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static com.babe.constants.PortalConstants.BASE_PATH;
+
 @SpringBootApplication
 public class DemoApplication
 {
@@ -95,9 +97,9 @@ public class DemoApplication
             velocityEngine.init(p);
 
             DefaultDirectoryManager dm = new DefaultDirectoryManager();
-            //dm.createDefaultDirectory(payload.getProjectName(), payload.getAppName());
-            final String BASE_PATH_TEMP = dm.tempFolderGenerator();
-            globals.put("basePath",BASE_PATH_TEMP);
+            dm.createDefaultDirectory(payload.getProjectName(), payload.getAppName());
+            //final String BASE_PATH_TEMP = dm.tempFolderGenerator();
+            globals.put("basePath",BASE_PATH);
 
             ProjectTree project = new ProjectTree();
 

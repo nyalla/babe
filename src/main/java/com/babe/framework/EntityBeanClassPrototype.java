@@ -2,6 +2,7 @@ package com.babe.framework;
 
 import com.babe.beans.FieldDetails;
 import com.babe.constants.PortalStaticMaps;
+import com.babe.util.ConvertUtil;
 import com.google.common.base.CaseFormat;
 
 import java.util.ArrayList;
@@ -47,8 +48,7 @@ public class EntityBeanClassPrototype extends AbstractClassPrototype
             FieldPrototype fieldPrototype = new FieldPrototype();
             fieldPrototype.setName(fd.getFieldName());
             fieldPrototype.setType(PortalStaticMaps.typeMap.get(fd.getFieldType()));
-            fieldPrototype.setGetterAndSetterField(
-                    fd.getFieldName().substring(0, 1).toUpperCase() + fd.getFieldName().substring(1));
+            fieldPrototype.setGetterAndSetterField(ConvertUtil.firstLetterCapital(fd.getFieldName()));
             //populate Annotation based on field type
             if (fd.isIdentity())
             {
@@ -68,8 +68,31 @@ public class EntityBeanClassPrototype extends AbstractClassPrototype
             }
             fields.add(fieldPrototype);
         }
+        //Adding timestamp fields imports
+        classLevelAnnotation.add("import org.hibernate.annotations.CreationTimestamp;");
+        classLevelAnnotation.add("import org.hibernate.annotations.UpdateTimestamp;");
+        classLevelAnnotation.add("import java.util.Date;");
+
+        //adding timestamp fields ., 1 is for crete and 2 is for update
+        addDefaultTimestampFields("cdate",1);
+        addDefaultTimestampFields("udate",2);
 
         return null;
+    }
+
+    private void addDefaultTimestampFields(String field,int t){
+        FieldPrototype fieldPrototype = new FieldPrototype();
+        fieldPrototype.setName(field);
+        fieldPrototype.setType("Date");
+        fieldPrototype.setGetterAndSetterField(ConvertUtil.firstLetterCapital(field));
+        List<String> annotations = new ArrayList<>();
+        annotations.add(PortalStaticMaps.getJpaTimeStampAnnotation(t));
+        annotations.add("@Temporal(TemporalType.TIMESTAMP)");
+        annotations.add(
+                "@Column(name = \"" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field)
+                        + "\", nullable = false)");
+        fieldPrototype.getAnnotation().addAll(annotations);
+        fields.add(fieldPrototype);
     }
 
 }

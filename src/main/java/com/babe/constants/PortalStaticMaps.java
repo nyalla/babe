@@ -11,6 +11,20 @@ public class PortalStaticMaps
         put("int", "Integer");
         put("long", "Long");
         put("date", "Date");
+        put("timestamp", "timestamp");
 
     }};
+
+    public static final String getJpaTimeStampAnnotation(int type)
+    {
+        switch (type)
+        {
+            case 1:
+                return "@CreationTimestamp";
+            case 2:
+                return "@UpdateTimestamp";
+            default:
+                return null;
+        }
+    }
 }

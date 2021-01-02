@@ -10,7 +10,7 @@ public abstract class AbstractClassPrototype implements ClassPrototype
     public List<String> imports = new LinkedList<>();
     public String className;
     public String classInstanceName;
-    public List<String> classLevelAnnotation = new ArrayList<>();
+    public List<String> classLevelAnnotation = new LinkedList<>();
     public String classCategory;
     public List<FieldPrototype> fields = new ArrayList<>();
     public List<String> autowireClasses = new ArrayList<>();
