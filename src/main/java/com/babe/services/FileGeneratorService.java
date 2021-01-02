@@ -78,7 +78,25 @@ public class FileGeneratorService
                             System.err.println(e);
                         }
                     });
+        } finally
+        {
+            deleteTemporaryDirectory(sourceDirPath);
         }
         return byteOutputStream.toByteArray();
+    }
+
+    public static void deleteTemporaryDirectory(String dirPath)
+    {
+        File dir = new File(dirPath);
+        try
+        {
+            FileUtils.deleteDirectory(dir);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            dir.deleteOnExit();
+        }
     }
 }

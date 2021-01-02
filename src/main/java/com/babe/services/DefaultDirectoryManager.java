@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Instant;
 
 import static com.babe.constants.PortalConstants.*;
 
@@ -28,6 +31,22 @@ public class DefaultDirectoryManager
         } catch (IOException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public String tempFolderGenerator()
+    {
+        try
+        {
+            // create temporary folder
+            Path path = Files.createTempDirectory("project" + Instant.now().getEpochSecond());
+            // print path
+            System.out.println(path.toAbsolutePath().toString());
+            return path.toAbsolutePath().toString();
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
+            return null;
         }
     }
 }

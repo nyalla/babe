@@ -19,12 +19,14 @@ import java.util.Map;
 import java.util.Properties;
 
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication
+{
 
-	public static void main(String[] args) {
-		System.out.println("Service started..........");
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args)
+    {
+        System.out.println("Service started..........");
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
     public static class TestFrameWork
     {
@@ -93,7 +95,9 @@ public class DemoApplication {
             velocityEngine.init(p);
 
             DefaultDirectoryManager dm = new DefaultDirectoryManager();
-            dm.createDefaultDirectory(payload.getProjectName(), payload.getAppName());
+            //dm.createDefaultDirectory(payload.getProjectName(), payload.getAppName());
+            final String BASE_PATH_TEMP = dm.tempFolderGenerator();
+            globals.put("basePath",BASE_PATH_TEMP);
 
             ProjectTree project = new ProjectTree();
 
@@ -107,11 +111,11 @@ public class DemoApplication {
             project.getRepositoryList().add(repository);
 
             ControllerClassPrototype controller = new ControllerClassPrototype(
-                    ConvertUtil.firstLetterCapital(payload.getTableName()) , "", globals, repository);
+                    ConvertUtil.firstLetterCapital(payload.getTableName()), "", globals, repository);
             project.getControllerList().add(controller);
 
             ApplicationClassPrototype application = new ApplicationClassPrototype(
-                    ConvertUtil.firstLetterCapital(payload.getAppName()) , "", globals);
+                    ConvertUtil.firstLetterCapital(payload.getAppName()), "", globals);
             project.setApplicationClassPrototype(application);
 
             ApplicationPropertiesPrototype propertiesPrototype = new ApplicationPropertiesPrototype(payload.getApplicationProperties());

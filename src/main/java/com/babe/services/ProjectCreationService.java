@@ -8,6 +8,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +40,8 @@ public class ProjectCreationService
 
         //Default directory creation
         defaultDirectoryManager.createDefaultDirectory(payload.getProjectName(), payload.getAppName());
+        final String BASE_PATH_TEMP = defaultDirectoryManager.tempFolderGenerator();
+        globals.put("basePath",BASE_PATH_TEMP);
 
         //Entity creation class
         EntityBeanClassPrototype entityBean = new EntityBeanClassPrototype(
@@ -77,7 +80,7 @@ public class ProjectCreationService
         mainClassBuilder.constructProperties(propertiesPrototype, engine, globals);
         mainClassBuilder.constructBuildFile(buildFilePrototype, engine, globals);
 
-        String generatedProject = BASE_PATH + globals.get("projectName");
+        String generatedProject = globals.get("basePath").toString();
 
         //Create Zip folder of the project directory
         try
