@@ -39,7 +39,7 @@ public class ProjectCreationService
         globals.put("projectName", payload.getProjectName());
 
         //Default directory creation
-        defaultDirectoryManager.createDefaultDirectory(payload.getProjectName(), payload.getAppName());
+        //defaultDirectoryManager.createDefaultDirectory(payload.getProjectName(), payload.getAppName());
         final String BASE_PATH_TEMP = defaultDirectoryManager.tempFolderGenerator();
         globals.put("basePath",BASE_PATH_TEMP);
 
