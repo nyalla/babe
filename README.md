@@ -52,8 +52,8 @@ sample JSON which generate spring boot project will be like below.,
 	"contextPath":"management",
 	"dataSourceUrl":"jdbc:mysql://localhost:9999",
 	"dataBaseName":"base",
-	"dataSourceUserName":"root",
-	"getDataSourcePassword":"root"
+	"username":"root",
+	"password":"root"
 	}
 }
 

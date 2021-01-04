@@ -8,8 +8,8 @@ public class ApplicationProperties
     private String contextPath;
     private String dataSourceUrl;
     private String dataBaseName;
-    private String dataSourceUserName;
-    private String getDataSourcePassword;
+    private String username;
+    private String password;
     Map<String,Object> additional;
 
     public String getDataBaseName()
@@ -52,24 +52,24 @@ public class ApplicationProperties
         this.dataSourceUrl = dataSourceUrl;
     }
 
-    public String getDataSourceUserName()
+    public String getUsername()
     {
-        return dataSourceUserName;
+        return username;
     }
 
-    public void setDataSourceUserName(String dataSourceUserName)
+    public void setUsername(String username)
     {
-        this.dataSourceUserName = dataSourceUserName;
+        this.username = username;
     }
 
-    public String getGetDataSourcePassword()
+    public String getPassword()
     {
-        return getDataSourcePassword;
+        return password;
     }
 
-    public void setGetDataSourcePassword(String getDataSourcePassword)
+    public void setPassword(String password)
     {
-        this.getDataSourcePassword = getDataSourcePassword;
+        this.password = password;
     }
 
     public Map<String, Object> getAdditional()
